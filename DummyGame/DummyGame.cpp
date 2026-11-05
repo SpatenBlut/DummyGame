@@ -17,37 +17,35 @@ void GameLoop() {
     int playerX = 5;
     int playerY = 4;
 
+    int grid[HEIGHT][WIDTH] = {
+            { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 },
+            { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+            { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+            { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+            { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+            { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+            { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+            { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+            { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+            { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 }
+    };
+
     while (true) {
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, 0 });
-
-        for (int x = 0; x < WIDTH + 2; x++)
-            std::cout << "#";
-        std::cout << std::endl;
 
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
 
-                if (x == 0) {
+                if (grid[y][x] == 1) {
                     std::cout << "#";
-                }
-
-                if (playerX == x && playerY == y) {
-                    std::cout << "@";
                 }
                 else {
                     std::cout << " ";
                 }
-
-                if (x == WIDTH - 1) {
-                    std::cout << "#";
-                }
             }
             std::cout << std::endl;
         }
-
-        for (int x = 0; x < WIDTH + 2; x++)
-            std::cout << "#";
-        std::cout << std::endl;
+        
 
         Sleep(100);
     }
@@ -56,6 +54,12 @@ void GameLoop() {
 
 int main()
 {
+    std::thread t(PlayerInput);
+    std::thread t1(GameLoop);
+
+    t.join();
+    t1.join();
+
     std::cout << "Press W to start Game";
 
     while (true) {   
@@ -67,15 +71,9 @@ int main()
         Sleep(100);
     }
 
-    std::thread t(PlayerInput);
-    std::thread t1(GameLoop);
-
     system("cls");
-    // Game Loop
     
     while (true) {
-        t.join();
-        t1.join();
     }
 }
 
