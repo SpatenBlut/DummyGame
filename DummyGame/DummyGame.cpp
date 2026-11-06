@@ -68,7 +68,6 @@ void GameLoop() {
     system("cls");
 
     while (true) {
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, 0 });
 
         PlayerMovement();
 
@@ -87,9 +86,12 @@ void GameLoop() {
             }
             std::cout << std::endl;
         }
+
+        std::cout << "HP: " << p.Health << "\n" << "AMMO: " << p.Ammunition;
         
 
         Sleep(100);
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, 0 });
     }
 }
 
