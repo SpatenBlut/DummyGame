@@ -7,6 +7,9 @@
 const int WIDTH = 40;
 const int HEIGHT = 20;
 
+int LastButtonPressed; // 0 = W, 1 = S, 2 = A, 3 = D
+bool AttackStatus;
+
 Player p;
 
 int grid[HEIGHT][WIDTH] = {
@@ -41,26 +44,33 @@ bool CheckPos(int FuturPlayerPosX, int FuturPlayerPosY) {
     }
 }
 
-void PlayerMovement() {
+void PlayerInteraction() {
     if (GetAsyncKeyState('W') & 0x8000) {
         if (CheckPos(p.Position.x, p.Position.y - 1)) {
             p.Position.y -= 1;
+            LastButtonPressed = 0;
         }
     }
     if (GetAsyncKeyState('S') & 0x8000) {
         if (CheckPos(p.Position.x, p.Position.y + 1)) {
             p.Position.y += 1;
+            LastButtonPressed = 1;
         }
     }
     if (GetAsyncKeyState('A') & 0x8000) {
         if (CheckPos(p.Position.x - 1, p.Position.y)) {
             p.Position.x -= 1;
+            LastButtonPressed = 2;
         }
     }
     if (GetAsyncKeyState('D') & 0x8000) {
         if (CheckPos(p.Position.x + 1, p.Position.y)) {
             p.Position.x += 1;
+            LastButtonPressed = 3;
         }
+    }
+    if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+        AttackStatus = true;
     }
 }
 
@@ -69,7 +79,7 @@ void GameLoop() {
 
     while (true) {
 
-        PlayerMovement();
+        PlayerInteraction();
 
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
@@ -88,7 +98,7 @@ void GameLoop() {
         }
 
         std::cout << "HP: " << p.Health << "\n" << "AMMO: " << p.Ammunition;
-        
+        AttackStatus = false;
 
         Sleep(100);
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, 0 });

@@ -8,9 +8,11 @@ struct Vec2 {
 struct Player {
 	int Health = 100;
 	int Ammunition = 10;
+	int Level = 0;
+	int XP = 0;
+
 
 	Vec2 Position;
-	char Name[16];
 
 	void TakeDamage(int amount);
 };
