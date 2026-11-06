@@ -4,17 +4,11 @@
 
 #include "Player.h"
 
-void PlayerInput(){
+// Game Variabls
+const int WIDTH = 20;
+const int HEIGHT = 10;
 
-}
-
-void GameLoop() {
-
-    // Game Variabls
-    const int WIDTH = 20;
-    const int HEIGHT = 10;
-
-    int grid[HEIGHT][WIDTH] = {
+int grid[HEIGHT][WIDTH] = {
             { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 },
             { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
             { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
@@ -25,18 +19,53 @@ void GameLoop() {
             { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
             { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
             { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 }
-    };
+};
 
+bool CheckPos(int FuturPlayerPosX, int FuturPlayerPosY) {
+    if (grid[FuturPlayerPosY][FuturPlayerPosX] == 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+void GameLoop() {
     system("cls");
+    Player p;
 
     while (true) {
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, 0 });
+
+        if (GetAsyncKeyState('W') & 0x8000) {
+            if (CheckPos(p.Position.x, p.Position.y - 1)) {
+                p.Position.y -= 1;
+            }
+        }
+        if (GetAsyncKeyState('S') & 0x8000) {
+            if (CheckPos(p.Position.x, p.Position.y + 1)) {
+                p.Position.y += 1;
+            }
+        }
+        if (GetAsyncKeyState('A') & 0x8000) {
+            if (CheckPos(p.Position.x - 1, p.Position.y)) {
+                p.Position.x -= 1;
+            }
+        }
+        if (GetAsyncKeyState('D') & 0x8000) {
+            if (CheckPos(p.Position.x + 1, p.Position.y)) {
+                p.Position.x += 1;
+            }
+        }
 
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
 
                 if (grid[y][x] == 1) {
                     std::cout << "#";
+                }
+                else if(y == p.Position.y && x == p.Position.x){
+                    std::cout << "@";
                 }
                 else {
                     std::cout << " ";
@@ -65,12 +94,5 @@ int main()
         Sleep(100);
     }
 
-    std::thread t(PlayerInput);
-    std::thread t1(GameLoop);
-
-    t.join();
-    t1.join();
-
-    while (true) {
-    }
+    GameLoop();
 }
