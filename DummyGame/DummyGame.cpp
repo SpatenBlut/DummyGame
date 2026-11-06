@@ -14,9 +14,6 @@ void GameLoop() {
     const int WIDTH = 20;
     const int HEIGHT = 10;
 
-    int playerX = 5;
-    int playerY = 4;
-
     int grid[HEIGHT][WIDTH] = {
             { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 },
             { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
@@ -29,6 +26,8 @@ void GameLoop() {
             { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
             { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 }
     };
+
+    system("cls");
 
     while (true) {
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, 0 });
@@ -54,11 +53,6 @@ void GameLoop() {
 
 int main()
 {
-    std::thread t(PlayerInput);
-    std::thread t1(GameLoop);
-
-    t.join();
-    t1.join();
 
     std::cout << "Press W to start Game";
 
@@ -71,10 +65,12 @@ int main()
         Sleep(100);
     }
 
-    system("cls");
-    
+    std::thread t(PlayerInput);
+    std::thread t1(GameLoop);
+
+    t.join();
+    t1.join();
+
     while (true) {
     }
 }
-
-
