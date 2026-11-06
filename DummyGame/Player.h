@@ -1,8 +1,11 @@
 #pragma once
+#include <Windows.h>
+
+#include "GameLoop.h"
 
 struct Vec2 {
-	float x = 1;
-	float y = 1;
+	int x = 1;
+	int y = 1;
 };
 
 struct Player {
@@ -10,9 +13,11 @@ struct Player {
 	int Ammunition = 10;
 	int Level = 0;
 	int XP = 0;
-
-
+	int LastButtonPressed; // 0 = W, 1 = S, 2 = A, 3 = D
+	bool AttackStatus;
 	Vec2 Position;
-
-	void TakeDamage(int amount);
 };
+
+void TakeDamage(Player& p, int amount);
+bool CheckPos(int FuturPlayerPosX, int FuturPlayerPosY);
+void PlayerInteraction(Player& p);
