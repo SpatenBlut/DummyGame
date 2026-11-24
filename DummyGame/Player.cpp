@@ -27,14 +27,15 @@ void PlayerInteraction(Player& p) {
         }
     }
     if (GetAsyncKeyState('A') & 0x8000) {
-        if (CheckPos(p.Position.x - 1, p.Position.y)) {
-            p.Position.x -= 1;
+        if (CheckPos(p.Position.x - 2, p.Position.y)) {
+            p.Position.x -= 2;
+                
             p.LastButtonPressed = 2;
         }
     }
     if (GetAsyncKeyState('D') & 0x8000) {
-        if (CheckPos(p.Position.x + 1, p.Position.y)) {
-            p.Position.x += 1;
+        if (CheckPos(p.Position.x + 2, p.Position.y)) {
+            p.Position.x += 2;
             p.LastButtonPressed = 3;
         }
     }
