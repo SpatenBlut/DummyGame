@@ -3,6 +3,8 @@
 
 #include "GameLoop.h"
 
+inline bool doubleTick = true;
+
 struct Vec2 {
 	int x = 1;
 	int y = 1;

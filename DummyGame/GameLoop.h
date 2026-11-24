@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <windows.h>
+#include <chrono>
+#include <thread>
 
 #include "Player.h"
 
@@ -31,5 +33,5 @@ inline int grid[HEIGHT][WIDTH] = {
 };
 
 
-
-void GameLoop();
+void update();
+void render();

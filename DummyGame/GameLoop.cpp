@@ -1,12 +1,12 @@
 #include "GameLoop.h"
 
-void GameLoop() {
-    system("cls");
+Player p;
 
-    Player p;
+void update() {
+    PlayerInteraction(p);
+}
 
-    while (true) {
-        PlayerInteraction(p);
+void render() {
 
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
@@ -26,8 +26,5 @@ void GameLoop() {
 
         std::cout << "HP: " << p.Health << "\n" << "AMMO: " << p.Ammunition;
         p.AttackStatus = false;
-
-        Sleep(1);
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, 0 });
-    }
 }
